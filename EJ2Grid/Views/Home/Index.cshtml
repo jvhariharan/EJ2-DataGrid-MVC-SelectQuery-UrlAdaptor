@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@using Syncfusion.EJ2
+
+<input type="button" value="Filter" id="btn" />
+
+@(Html.EJS().Grid("Grid").DataSource(ds => ds.Url(@Url.Action("UrlDatasource", "Home")).Adaptor("UrlAdaptor"))
+                .AllowFiltering().FilterSettings(filter => { filter.Type(Syncfusion.EJ2.Grids.FilterType.Excel); }).ActionBegin("actionBegin").Render())
+
+<script type="text/javascript">
+    document.getElementById("btn").addEventListener("click", function (args) {
+        var grid = document.getElementById("Grid").ej2_instances[0];  // Grid instance
+        grid.query = new ej.data.Query().where("EmployeeID", "equal", 3);  // Where query to filter the EmployeeID field
+        grid.refresh();
+    });
+
+    function actionBegin(args) {
+        if (args.requestType === "filterchoicerequest") {
+            var filterfields = [];
+            var objFilter = Object.keys(args.filterModel.existingPredicate);
+            for (var i = 0; i < objFilter.length; i++) {
+                filterfields.push(objFilter[i]);
+            }
+            filterfields.push(args.filterModel.options.field);
+            args.query.distincts = [];
+            args.query.select(filterfields); // Created the select query 
+        } 
+    }
+</script>
