@@ -1,0 +1,2 @@
+# EJ2-DataGrid-MVC-SelectQuery-UrlAdaptor
+A sample that shows how to send the distinct pr select query along the checkbox filterchoicerequest.In the We have created the select query for previous filtered and current filtering column. We have used Grid actionBegin event to create this select query. We have used this select query to select the columns and its distinct values and returned this selected values from the server. 
